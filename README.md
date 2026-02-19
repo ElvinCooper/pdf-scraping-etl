@@ -1,5 +1,9 @@
 # PDF Extractor + Web Scraper + ETL
 
+Este proyecto es una demostración de un pipeline ETL (Extract, Transform, Load) diseñado para procesar información de diversas fuentes. Combina técnicas de web scraping para recolectar datos de internet y herramientas de extracción de texto y tablas de documentos PDF. Una vez extraídos, los datos son limpiados, estructurados y finalmente cargados en formatos accesibles como CSV y texto plano. Es una solución versátil para la automatización de la recolección y preparación de datos.
+
+
+
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![BeautifulSoup](https://img.shields.io/badge/BeautifulSoup-4-green?style=for-the-badge)
