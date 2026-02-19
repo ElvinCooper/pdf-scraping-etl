@@ -19,7 +19,7 @@ Demostrar capacidad real en:
 ## 🛠 Tecnologías utilizadas
 - Python 3.11
 - BeautifulSoup4 + lxml (para scraping)
-- pdfplumber (para PDFs – más fácil y potente que pdfminer)
+- pdfplumber (para PDFs)
 - Requests
 - Pandas (limpieza ETL)
 - JSON + CSV (output)
@@ -53,7 +53,7 @@ unumbio-demo-pdf-scraping-etl/
 
 ```bash
 git clone https://github.com/TU-USUARIO/unumbio-demo-pdf-scraping-etl.git
-cd unumbio-demo-pdf-scraping-etl
+cd pdf-scraping-etl
 python -m venv venv
 source venv/bin/activate    # Windows: venv\Scripts\activate
 pip install -r requirements.txt
@@ -82,5 +82,5 @@ python src/etl_pipeline.py
 
 # 📸 Resultados esperados
 
-Carpeta data/output/ con archivos JSON, TXT y CSV limpios.   
-Logs claros en logs/app.log.
+- **Carpeta data/output/ con archivos JSON, TXT y CSV limpios.**   
+- **Logs claros en logs/app.log.**
