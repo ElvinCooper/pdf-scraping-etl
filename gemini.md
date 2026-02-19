@@ -1,62 +1,130 @@
-GEMINI.md
-Dev environment tips
-Usa siempre un entorno virtual:
-python -m venv venv
-Windows:
-  venv\Scripts\activate
-macOS / Linux:
-  source venv/bin/activate
-Instala dependencias
-pip install -r requirements.txt  pip install -r requirements-dev.txt
+# GEMINI.md
 
-Para desarrollo rápido usa pip install -e . (si tienes setup.py o pyproject.toml).
-Evita instalar paquetes globales. Siempre trabaja dentro del venv.
+## Dev Environment Tips
+
+Usa siempre un entorno virtual:
+
+```bash
+python -m venv venv
+```
+
+**Windows:**
+```bash
+venv\Scripts\activate
+```
+
+**macOS / Linux:**
+```bash
+source venv/bin/activate
+```
+
+### Instala dependencias
+
+```bash
+pip install -r requirements.txt
+pip install -r requirements-dev.txt
+```
+
+> Para desarrollo rápido usa `pip install -e .` (si tienes `setup.py` o `pyproject.toml`).
+> Evita instalar paquetes globales. Siempre trabaja dentro del `venv`.
+
+---
+
+## Tests
 
 Corre todos los tests con:
+
+```bash
 pytest -v
-O con covertura:
-pytest --cov=src --cov-report=term-missingopen htmlcov/index.html
+```
+
+O con cobertura:
+
+```bash
+pytest --cov=src --cov-report=term-missing
+open htmlcov/index.html
+```
+
 Desde la raíz del proyecto también puedes usar:
+
+```bash
 python -m pytest
-Para ejecutar test especificos:
+```
+
+Para ejecutar tests específicos:
+
+```bash
 pytest -k "nombre_del_test"
-O con patron
+```
+
+O con patrón:
+
+```bash
 pytest -k "scraping or pdf"
-Después de mover archivos o cambiar imports, siempre corre:Bash
-ruff check .          # linting rápidoruff format .         # formateo (Black compatible)mypy src              # Verificación de tipos estáticos
+```
 
-Todos los tests deben pasar y el linting debe estar limpio antes de hacer commit.
-Agrega o actualiza tests por cada cambio que hagas (aunque nadie te lo pida).
+---
 
-PR instructions
-Título del PR: Descripción corta y clara
-Ejemplos:
+## Linting & Tipos
 
-Añadir extracción de tablas de PDF
-Mejorar logging y manejo de errores en scraper
+Después de mover archivos o cambiar imports, siempre corre:
 
-Antes de hacer commit siempre ejecuta:Bash
-ruff check --fix .  ruff format .  pytest  
+```bash
+ruff check .        # linting rápido
+ruff format .       # formateo (Black compatible)
+mypy src            # verificación de tipos estáticos
+```
 
+> Todos los tests deben pasar y el linting debe estar limpio antes de hacer commit.
+> Agrega o actualiza tests por cada cambio que hagas (aunque nadie te lo pida).
 
-El CI de GitHub Actions (.github/workflows/ci.yml) debe pasar en verde.
+---
 
+## PR Instructions
 
-Incluye en la descripción del PR:
+**Título del PR:** Descripción corta y clara
 
+**Ejemplos:**
+- `Añadir extracción de tablas de PDF`
+- `Mejorar logging y manejo de errores en scraper`
 
-Qué se cambió
+Antes de hacer commit siempre ejecuta:
 
+```bash
+ruff check --fix .
+ruff format .
+pytest
+```
 
-Por qué
+> El CI de GitHub Actions (`.github/workflows/ci.yml`) debe pasar en verde.
 
+**Incluye en la descripción del PR:**
+- Qué se cambió
+- Por qué
+- Cómo probarlo
 
-Cómo probarlo
+---
 
+## Integración Continua (CI/CD)
 
-Integracion continua (CI/CD)
-Ejemplo basico .github/workflows/ci.yml:
+Ejemplo básico `.github/workflows/ci.yml`:
+
+```yaml
 name: CI
+
 on: [push, pull_request]
-jobs:  test:    runs-on: ubuntu-latest
-    steps:      - uses: actions/checkout@v4      - uses: actions/setup-python@v5        with:          python-version: "3.11"      - run: pip install -r requirements-dev.txt      - run: ruff check .      - run: ruff format --check .      - run: pytest --cov=src
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements-dev.txt
+      - run: ruff check .
+      - run: ruff format --check .
+      - run: pytest --cov=src
+```

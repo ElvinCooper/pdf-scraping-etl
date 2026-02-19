@@ -5,3 +5,4 @@ __pycache__/
 logs/
 .hypothesis/
 .pytest_cache/
+.coverage
