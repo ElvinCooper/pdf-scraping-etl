@@ -14,8 +14,7 @@ def extract_text_from_pdf(pdf_path):
         with pdfplumber.open(pdf_path) as pdf:
             full_text = ""
             for page in pdf.pages:
-                full_text += page.extract_text() + "
-"
+                full_text += page.extract_text() + "\n"
         logging.info(f"Successfully extracted text from {pdf_path}")
         return full_text
     except Exception as e:
@@ -48,13 +47,13 @@ if __name__ == "__main__":
     # Text extraction
     extracted_text = extract_text_from_pdf(sample_pdf_path)
     if extracted_text:
-        print(f"Extracted text from {sample_pdf_path}:
-{extracted_text[:500]}...")
+        print(f"""Extracted text from {sample_pdf_path}:
+{extracted_text[:500]}...""")
 
     # Table extraction
     extracted_tables = extract_tables_from_pdf(sample_pdf_path)
     if extracted_tables:
-        print(f"
-Extracted tables from {sample_pdf_path}:")
+        print(f"""
+Extracted tables from {sample_pdf_path}:""")
         for i, table in enumerate(extracted_tables):
             print(f"Table {i+1}: {table}")

@@ -27,5 +27,5 @@ if __name__ == "__main__":
     sample_url = "http://example.com" # Replace with a real URL for testing
     scraped_content = scrape_website(sample_url)
     if scraped_content:
-        print(f"Scraped content from {sample_url}:
-{scraped_content[:500]}...")
+        print(f"""Scraped content from {sample_url}:
+{scraped_content[:500]}...""")
