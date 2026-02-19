@@ -4,6 +4,7 @@ import logging
 import os
 import re
 import pandas as pd
+from bs4 import BeautifulSoup
 from src.scraper import scrape_website
 from src.pdf_extractor import extract_text_from_pdf
 
@@ -76,18 +77,32 @@ def transform(data):
 
     # --- Transform Web Scraped Data ---
     if 'web_scraped_data' in data and data['web_scraped_data']:
-        cleaned_web_data = []
+        structured_web_data = []
         for item in data['web_scraped_data']:
-            cleaned_content = clean_text(item.get('content'))
-            if cleaned_content:
-                cleaned_web_data.append({
-                    "url": item.get('url'),
-                    "cleaned_content": cleaned_content
+            url = item.get('url')
+            html_content = item.get('content')
+            
+            if html_content:
+                soup = BeautifulSoup(html_content, 'lxml')
+                
+                # Extract title
+                title_tag = soup.find('title')
+                title = clean_text(title_tag.get_text()) if title_tag else "No Title"
+                
+                # Extract main text (e.g., from paragraphs)
+                paragraphs = soup.find_all('p')
+                main_text = clean_text(' '.join([p.get_text() for p in paragraphs]))
+                
+                structured_web_data.append({
+                    "url": url,
+                    "title": title,
+                    "main_text": main_text
                 })
-        if cleaned_web_data:
-            transformed_data['web_data_dataframe'] = pd.DataFrame(cleaned_web_data)
+        
+        if structured_web_data:
+            transformed_data['web_data_dataframe'] = pd.DataFrame(structured_web_data)
         else:
-            logging.warning("No web scraped data found after cleaning.")
+            logging.warning("No structured web data found after processing.")
     else:
         logging.warning("No web scraped data found for transformation.")
 
