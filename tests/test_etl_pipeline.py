@@ -1,8 +1,7 @@
 # tests/test_etl_pipeline.py
 
-import pytest
 from src import etl_pipeline
-import pandas as pd
+
 
 def test_main_full_run(monkeypatch):
     """
@@ -18,15 +17,22 @@ def test_main_full_run(monkeypatch):
     transform_called = []
     load_called = []
 
-    monkeypatch.setattr(etl_pipeline, "extract", lambda: extract_called.append(True) or {"data": "dummy"})
-    monkeypatch.setattr(etl_pipeline, "transform", lambda data: transform_called.append(True) or {"transformed_data": "dummy"})
+    monkeypatch.setattr(
+        etl_pipeline, "extract", lambda: extract_called.append(True) or {"data": "dummy"}
+    )
+    monkeypatch.setattr(
+        etl_pipeline,
+        "transform",
+        lambda data: transform_called.append(True) or {"transformed_data": "dummy"},
+    )
     monkeypatch.setattr(etl_pipeline, "load", lambda data: load_called.append(True))
-    
+
     etl_pipeline.main()
-    
+
     assert extract_called
     assert transform_called
     assert load_called
+
 
 def test_main_no_extract_data(monkeypatch):
     """
@@ -41,14 +47,19 @@ def test_main_no_extract_data(monkeypatch):
     load_called = []
 
     monkeypatch.setattr(etl_pipeline, "extract", lambda: extract_called.append(True) or {})
-    monkeypatch.setattr(etl_pipeline, "transform", lambda data: transform_called.append(True) or {"transformed_data": "dummy"})
+    monkeypatch.setattr(
+        etl_pipeline,
+        "transform",
+        lambda data: transform_called.append(True) or {"transformed_data": "dummy"},
+    )
     monkeypatch.setattr(etl_pipeline, "load", lambda data: load_called.append(True))
-    
+
     etl_pipeline.main()
-    
+
     assert extract_called
     assert not transform_called
     assert not load_called
+
 
 def test_main_no_transform_data(monkeypatch):
     """
@@ -62,12 +73,14 @@ def test_main_no_transform_data(monkeypatch):
     transform_called = []
     load_called = []
 
-    monkeypatch.setattr(etl_pipeline, "extract", lambda: extract_called.append(True) or {"data": "dummy"})
+    monkeypatch.setattr(
+        etl_pipeline, "extract", lambda: extract_called.append(True) or {"data": "dummy"}
+    )
     monkeypatch.setattr(etl_pipeline, "transform", lambda data: transform_called.append(True) or {})
     monkeypatch.setattr(etl_pipeline, "load", lambda data: load_called.append(True))
-    
+
     etl_pipeline.main()
-    
+
     assert extract_called
     assert transform_called
     assert not load_called

@@ -32,10 +32,12 @@ unumbio-demo-pdf-scraping-etl/
 ├── requirements.txt
 ├── .gitignore
 ├── src/
-│   ├── init.py
-│   ├── scraper.py          # Web scraping demo
-│   ├── pdf_extractor.py    # Extracción de PDFs
-│   └── etl_pipeline.py     # Proceso ETL completo
+│   ├── __init__.py         # Package initialization
+│   ├── logger.py           # Centralized logging configuration
+│   ├── scraper.py          # Web scraping and metadata extraction
+│   ├── pdf_extractor.py    # PDF text and table extraction
+│   └── etl_pipeline.py     # ETL orchestration (Extract → Transform → Load)
+├── tests/                  # Unit tests for each module
 ├── data/
 │   ├── input/
 │   │   ├── sample.pdf      # ← Descarga aquí tu PDF de prueba
